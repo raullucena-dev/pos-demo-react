@@ -60,10 +60,15 @@ export function cartReducer(cart: Cart, action: CartAction): Cart {
       return cart.filter((line) => line.productId !== action.productId);
     case "syncStock": {
       const stock = new Map(action.products.map((p) => [p.id, p.stock_quantity]));
-      return cart.map((line) => {
-        const available = stock.get(line.productId);
-        return available === undefined ? line : { ...line, available };
-      });
+      // Fresh stock wins: quantities above it are trimmed, sold-out lines drop out.
+      return cart
+        .map((line) => {
+          const available = stock.get(line.productId);
+          return available === undefined
+            ? line
+            : { ...line, available, quantity: clamp(line.quantity, available) };
+        })
+        .filter((line) => line.quantity > 0);
     }
     case "clear":
       return [];

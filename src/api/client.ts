@@ -80,7 +80,8 @@ export async function apiRequest<T>(
   try {
     response = await fetch(buildUrl(path, options.query), init);
   } catch (error) {
-    if (error instanceof DOMException && error.name === "AbortError") throw error;
+    // Checked by name: fetch may raise an AbortError from another realm (e.g. undici).
+    if ((error as { name?: unknown } | null)?.name === "AbortError") throw error;
     throw new ApiError(0, "network_error", "network request failed");
   }
 

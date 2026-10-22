@@ -6,19 +6,14 @@ const dateTime = new Intl.DateTimeFormat("es-PY", {
   timeZone: TIME_ZONE,
 });
 
-const shortDay = new Intl.DateTimeFormat("es-PY", {
-  day: "2-digit",
-  month: "2-digit",
-  timeZone: "UTC",
-});
-
 export function formatDateTime(iso: string): string {
   return dateTime.format(new Date(iso));
 }
 
-/** `"2026-10-22"` → `"22/10"`. Calendar dates are formatted in UTC to avoid shifting. */
+/** `"2026-10-05"` → `"05/10"` (day/month, as read in Paraguay). */
 export function formatShortDay(isoDate: string): string {
-  return shortDay.format(new Date(`${isoDate}T00:00:00Z`));
+  const [, month = "", day = ""] = isoDate.split("-");
+  return `${day}/${month}`;
 }
 
 /** Today's calendar date in Paraguay, as `YYYY-MM-DD`. */

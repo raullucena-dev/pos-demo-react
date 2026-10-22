@@ -94,7 +94,7 @@ export function Layout() {
           </button>
         </div>
       </header>
-      <main id="main" className="mx-auto w-full max-w-7xl flex-1 px-4 py-6">
+      <main id="main" className="mx-auto w-full max-w-7xl flex-1 px-4 pt-6 pb-24 lg:pb-6">
         <Outlet />
       </main>
     </div>

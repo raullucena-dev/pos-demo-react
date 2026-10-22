@@ -138,8 +138,10 @@ export function PosPage() {
           )}
         </section>
 
-        <Card className="h-fit lg:sticky lg:top-20">
-          <h2 className="text-lg font-semibold">Carrito</h2>
+        <Card className="h-fit scroll-mt-20 lg:sticky lg:top-20">
+          <h2 id="cart" className="text-lg font-semibold">
+            Carrito
+          </h2>
           {lastSale && (
             <div
               role="status"
@@ -188,13 +190,15 @@ export function PosPage() {
                       min={1}
                       max={line.available}
                       value={line.quantity}
-                      onChange={(event) =>
+                      onChange={(event) => {
+                        // An empty field while typing is not "zero": keep the line.
+                        if (event.target.value === "") return;
                         dispatch({
                           type: "setQuantity",
                           productId: line.productId,
                           quantity: Number(event.target.value),
-                        })
-                      }
+                        });
+                      }}
                       className="border-border bg-surface h-8 w-16 rounded-md border px-2 text-center text-sm"
                     />
                     <Button
@@ -263,6 +267,21 @@ export function PosPage() {
           </div>
         </Card>
       </div>
+      {cart.length > 0 && (
+        // On small screens the cart sits below the catalogue: keep the total in reach.
+        <div className="border-border bg-surface/95 fixed inset-x-0 bottom-0 z-20 border-t px-4 py-3 shadow-lg backdrop-blur lg:hidden">
+          <a
+            href="#cart"
+            className="focus-visible:outline-focus mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-md text-sm font-medium focus-visible:outline-2"
+          >
+            <span>
+              {totals.items} {totals.items === 1 ? "artículo" : "artículos"} ·{" "}
+              <strong>{formatPYG(totals.total)}</strong>
+            </span>
+            <span className="bg-primary text-primary-fg rounded-md px-3 py-2">Ver carrito</span>
+          </a>
+        </div>
+      )}
     </>
   );
 }
