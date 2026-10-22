@@ -12,8 +12,17 @@ Row-Level Security. Logging into one store never shows the other's data.
 
 ## Live demo
 
-> **Coming soon:** _URL to be added._ Credentials are shown on the login page, and the
-> data is reset every night.
+> **Live demo:** <https://pos-web-281796293339.us-east1.run.app>
+>
+> Two fictitious stores, **Demo Store North** and **Demo Store South**. The login page
+> lists the demo users (for example `north.cashier` or `south.manager`); the password
+> for all of them is `demo1234`. Logging into one store never shows the other's data.
+> All data is fictitious and is reset periodically. The services scale to zero, so the
+> first load may take a few seconds.
+>
+> The UI is served by nginx on Cloud Run and proxies `/api` to the
+> [API](https://github.com/raullucena-dev/fastapi-multitenant-rls) on the same origin.
+> How it is deployed: [docs/deploy.md](docs/deploy.md).
 
 ## Screenshots
 
