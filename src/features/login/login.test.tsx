@@ -9,6 +9,10 @@ describe("login", () => {
     const { user } = renderApp("/pos");
     expect(await screen.findByRole("heading", { name: "Iniciar sesión" })).toBeInTheDocument();
     expect(await screen.findByText("Demo Store North")).toBeInTheDocument();
+    expect(
+      screen.getByText("Todos los datos son ficticios y se restablecen periódicamente."),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/cada noche/)).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Usar north.cashier" }));
     expect(screen.getByLabelText("Usuario")).toHaveValue("north.cashier");

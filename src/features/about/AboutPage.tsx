@@ -42,7 +42,7 @@ export function AboutPage() {
           <p>
             El navegador habla con un único origen: nginx sirve esta aplicación y reenvía{" "}
             <code>/api/*</code> a la API FastAPI. Por eso la cookie de sesión es{" "}
-            <code>HttpOnly</code> y no hace falta CORS. Los datos se restablecen cada noche.
+            <code>HttpOnly</code> y no hace falta CORS. Los datos se restablecen periódicamente.
           </p>
         </Card>
         <Card>

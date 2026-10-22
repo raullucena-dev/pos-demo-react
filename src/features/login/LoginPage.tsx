@@ -166,7 +166,7 @@ export function LoginPage() {
               <li>
                 Cada tienda es un tenant separado: al ingresar a una nunca ves datos de la otra.
               </li>
-              <li>Todos los datos son ficticios y se restablecen cada noche.</li>
+              <li>Todos los datos son ficticios y se restablecen periódicamente.</li>
             </ul>
           </Card>
         )}
