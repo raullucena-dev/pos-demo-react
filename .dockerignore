@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+playwright-report
+test-results
+.git
+.github
+docs
+e2e
+public/mockServiceWorker.js
+.env
+.env.local
