@@ -7,9 +7,9 @@ export interface DailyPoint {
   salesCount: number;
 }
 
-const WIDTH = 720;
-const HEIGHT = 240;
-const PAD = { top: 16, right: 12, bottom: 28, left: 12 };
+const WIDTH = 1000;
+const HEIGHT = 280;
+const PAD = { top: 28, right: 12, bottom: 32, left: 12 };
 
 /** Dependency-free SVG bar chart; the same data is exposed as a table for screen readers. */
 export function RevenueChart({ points }: { points: DailyPoint[] }) {
@@ -32,6 +32,17 @@ export function RevenueChart({ points }: { points: DailyPoint[] }) {
         <desc id="revenue-chart-desc">
           Barras con los ingresos diarios del período; el detalle está en la tabla siguiente.
         </desc>
+        <text x={PAD.left} y={14} className="fill-muted text-[13px]">
+          Máximo: {formatPYG(max)}
+        </text>
+        <line
+          x1={PAD.left}
+          x2={WIDTH - PAD.right}
+          y1={PAD.top}
+          y2={PAD.top}
+          strokeDasharray="4 4"
+          className="stroke-border"
+        />
         <line
           x1={PAD.left}
           x2={WIDTH - PAD.right}
@@ -59,7 +70,7 @@ export function RevenueChart({ points }: { points: DailyPoint[] }) {
                   x={x + barW / 2}
                   y={HEIGHT - 8}
                   textAnchor="middle"
-                  className="fill-muted text-[11px]"
+                  className="fill-muted text-[13px]"
                 >
                   {formatShortDay(point.day)}
                 </text>
