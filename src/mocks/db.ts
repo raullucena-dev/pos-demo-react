@@ -4,6 +4,8 @@
  * UI depends on: tenant scoping by session, role checks, error shapes and status codes.
  */
 
+import { todayInParaguay } from "@/lib/dates";
+
 export type Role = "admin" | "manager" | "cashier";
 
 interface MockUser {
@@ -95,6 +97,12 @@ const SEED_PRODUCTS: Record<number, [string, string, number, number][]> = {
   ],
 };
 
+const ROLE_NAMES: Record<Role, string> = {
+  admin: "Administrador",
+  manager: "Encargado",
+  cashier: "Cajero",
+};
+
 const money = (value: number) => `${Math.round(value)}.00`;
 const STORAGE_KEY = "pos-demo-mock-session";
 
@@ -149,7 +157,7 @@ export class MockDb {
           id: this.nextId(),
           tenant_id: store.tenantId,
           username: `${store.slug}.${role}`,
-          full_name: `${role} ${store.slug}`,
+          full_name: `${ROLE_NAMES[role]} ${store.slug[0]!.toUpperCase()}${store.slug.slice(1)}`,
           role,
           is_active: true,
           created_at: created,
@@ -494,14 +502,14 @@ export class MockDb {
     if (to < from)
       throw new MockHttpError(400, "bad_request", "date_to must not be before date_from");
     const inRange = this.sales.filter((s) => {
-      const day = s.created_at.slice(0, 10);
+      const day = todayInParaguay(new Date(s.created_at));
       return s.tenant_id === user.tenant_id && day >= from && day <= to;
     });
     const daily = new Map<string, { sales_count: number; revenue: number }>();
     const top = new Map<number, { quantity: number; revenue: number }>();
     let itemsSold = 0;
     for (const sale of inRange) {
-      const day = sale.created_at.slice(0, 10);
+      const day = todayInParaguay(new Date(sale.created_at));
       const entry = daily.get(day) ?? { sales_count: 0, revenue: 0 };
       entry.sales_count += 1;
       entry.revenue += sale.total;

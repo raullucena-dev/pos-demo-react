@@ -35,7 +35,7 @@ export default defineConfig({
       include: ["src/**/*.{ts,tsx}"],
       exclude: [
         "src/main.tsx",
-        "src/mocks/browser.ts",
+        "src/mocks/**",
         "src/test/**",
         "src/**/*.test.{ts,tsx}",
         "src/vite-env.d.ts",
